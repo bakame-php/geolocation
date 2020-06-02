@@ -33,7 +33,8 @@ On failed instantiation a `Bakame\Geolocation\CanNotGenerateGeolocation` excepti
 - Latitudes below `-90.0` or above `90.0` degrees are capped, not wrapped.
 - Longitudes below `-180.0` or above `180.0` degrees are wrapped.
 
-Because the package is using the `Geotools` package you can use geotools for other coordinates representation
+Because the package is using the [Geotools](https://github.com/thephpleague/geotools) library, you can use other coordinates representation
+to instantiate a new object.
 
 ```php
 use Bakame\Geolocation\Geolocation;
