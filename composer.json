@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": ">=7.4",
         "league/geotools": "^0.8.1"
     },
     "require-dev": {
@@ -34,9 +34,9 @@
         }
     },
     "scripts": {
+        "phpcs-fix": "php-cs-fixer fix -vvv --allow-risky=yes --ansi",
+        "phpcs": "php-cs-fixer fix -vvv --allow-risky=yes --ansi --diff --dry-run ",
         "psalm": "psalm --show-info=true",
-        "format": "php-cs-fixer fix --allow-risky=yes",
-        "phpcs": "php-cs-fixer fix -v --diff --dry-run --allow-risky=yes --ansi",
         "phpunit": "phpunit --coverage-text",
         "test": [
             "@phpcs",
