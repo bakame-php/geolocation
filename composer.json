@@ -1,0 +1,50 @@
+{
+    "name": "bakame-php/geolocation",
+    "description": "process geolocation",
+    "keywords": [
+        "geolocation",
+        "sunrise",
+        "sunset",
+        "zenith"
+    ],
+    "homepage": "https://github.com/bakame-php/geolocation",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ignace Nyamagana Butera",
+            "email": "nyamsprod@gmail.com",
+            "homepage": "https://github.com/nyamsprod",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "league/geotools": "^0.8.1"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "nesbot/carbon": "^2.32",
+        "phpunit/phpunit": "^9.0",
+        "psalm/plugin-phpunit": "^0.10.1",
+        "vimeo/psalm": "^3.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bakame\\Geolocation\\": "src"
+        }
+    },
+    "scripts": {
+        "psalm": "psalm --show-info=true",
+        "format": "php-cs-fixer fix --allow-risky=yes",
+        "phpcs": "php-cs-fixer fix -v --diff --dry-run --allow-risky=yes --ansi",
+        "phpunit": "phpunit --coverage-text",
+        "test": [
+            "@phpcs",
+            "@psalm",
+            "@phpunit"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
