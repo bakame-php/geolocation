@@ -21,26 +21,31 @@ use const SUNFUNCS_RET_TIMESTAMP;
 
 final class Geolocation
 {
-    private CoordinateInterface $coordinate;
+    private float $latitude;
+
+    private float $longitude;
 
     private string $geoHash;
 
-    private function __construct(CoordinateInterface $coordinate, ?string $geoHash)
+    private function __construct(float $latitude, float $longitude, string $geoHash)
     {
-        $this->coordinate = $coordinate;
-
-        if (null === $geoHash) {
-            /** @var Geohash $geoHashService */
-            $geoHashService = (new Geohash())->encode($this->coordinate);
-            $geoHash = $geoHashService->getGeohash();
-        }
-
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
         $this->geoHash = $geoHash;
+    }
+
+    public static function fromGeotools(CoordinateInterface $coordinate): self
+    {
+        /** @var Geohash $geoHashService */
+        $geoHashService = (new Geohash())->encode($coordinate);
+        $geoHash = $geoHashService->getGeohash();
+
+        return new self($coordinate->getLatitude(), $coordinate->getLongitude(), $geoHash);
     }
 
     public static function fromCoordinates(float $latitude, float $longitude): self
     {
-        return new self(new Coordinate([$latitude, $longitude]), null);
+        return self::fromGeotools(new Coordinate([$latitude, $longitude]));
     }
 
     /**
@@ -55,17 +60,19 @@ final class Geolocation
             throw CanNotGenerateGeolocation::dueToInvalidGeoHash($geoHash, $exception);
         }
 
-        return new self($geoHashService->getCoordinate(), $geoHash);
+        $coordinate = $geoHashService->getCoordinate();
+
+        return new self($coordinate->getLatitude(), $coordinate->getLongitude(), $geoHash);
     }
 
     public function latitude(): float
     {
-        return $this->coordinate->getLatitude();
+        return $this->latitude;
     }
 
     public function longitude(): float
     {
-        return $this->coordinate->getLongitude();
+        return $this->longitude;
     }
 
     public function geoHash(): string
@@ -80,8 +87,8 @@ final class Geolocation
         $timestamp = date_sunrise(
             $date->getTimestamp(),
             SUNFUNCS_RET_TIMESTAMP,
-            $this->coordinate->getLatitude(),
-            $this->coordinate->getLongitude()
+            $this->latitude,
+            $this->longitude
         );
 
         if (false === $timestamp) {
@@ -107,8 +114,8 @@ final class Geolocation
         $timezone = $date->getTimezone();
         $timestamp = date_sun_info(
             $date->getTimestamp(),
-            $this->coordinate->getLatitude(),
-            $this->coordinate->getLongitude()
+            $this->latitude,
+            $this->longitude
         )['transit'];
 
         return $date->setTimestamp($timestamp)->setTimezone($timezone);
@@ -121,8 +128,8 @@ final class Geolocation
         $timestamp = date_sunset(
             $date->getTimestamp(),
             SUNFUNCS_RET_TIMESTAMP,
-            $this->coordinate->getLatitude(),
-            $this->coordinate->getLongitude()
+            $this->latitude,
+            $this->longitude
         );
 
         if (false === $timestamp) {
