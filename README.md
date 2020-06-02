@@ -20,9 +20,9 @@ To instantiate the `Bakame\Geolocation\Geolocation` class you need to use one of
 use Bakame\Geolocation\Geolocation;
 
 //Brussels coordinates and GeoHash
-$bxLatitude = 50.8466;
-$bxLongitude = 4.3528;
-$bxGeohash = 'u151703dgt4z';
+$bxLatitude = 50.85045;
+$bxLongitude = 4.3487805;
+$bxGeohash = 'u1516cn9mfvv';
 
 $location = GeoLocation::fromCoordinates($bxLatitude, $bxLongitude);
 $location = Geolocation::fromGeoHash($bxGeohash);
@@ -32,6 +32,17 @@ On failed instantiation a `Bakame\Geolocation\CanNotGenerateGeolocation` excepti
 
 - Latitudes below `-90.0` or above `90.0` degrees are capped, not wrapped.
 - Longitudes below `-180.0` or above `180.0` degrees are wrapped.
+
+Because the package is using the `Geotools` package you can use geotools for other coordinates representation
+
+```php
+use Bakame\Geolocation\Geolocation;
+use League\Geotools\Coordinate\Coordinate;
+
+$bxDegrees = '50°51\'1.62"N, 4°20\'55.61"E';
+$geoCoordinate = new Coordinate($bxDegrees);
+$location = GeoLocation::fromGeotools($geoCoordinate);
+```
 
 ### Get the time of zenith
 
