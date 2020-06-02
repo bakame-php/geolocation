@@ -1,6 +1,7 @@
 # Get information on a position
 
 This package uses geolocation to determine several properties around the sun position.
+
 This package is a fork of [Spatie/Sun](https://github.com/spatie/sun)
 
 ## Installation
@@ -27,8 +28,10 @@ $location = GeoLocation::fromCoordinates($bxLatitude, $bxLongitude);
 $location = Geolocation::fromGeoHash($bxGeohash);
 ```
 
+On failed instantiation a `Bakame\Geolocation\CanNotGenerateGeolocation` exception is thrown.
+
 - Latitudes below `-90.0` or above `90.0` degrees are capped, not wrapped.
-- Longitudes below `-180.0` or abode `180.0` degrees are wrapped.
+- Longitudes below `-180.0` or above `180.0` degrees are wrapped.
 
 ### Get the time of zenith
 
@@ -79,6 +82,8 @@ You can get the time of the sunset on a specific date by passing an object which
 If the object extends `DateTimeImmutable` the return object will be of the same type.
 
 ```php
+$carbon = CarbonImmutable::now();
+
 $location->sunset($carbon); // returns an instance of \Carbon\CarbonImmutable
 ```
 
@@ -95,6 +100,8 @@ $location->isSunUp(); // returns a boolean
 You can get determine if the sun is up at a specific moment by passing an instance of `DateTimeInterface` to `sunIsUp`
 
 ```php
+$carbon = Carbon::now();
+
 $location->sunIsUp($carbon); // returns a boolean
 ```
 
