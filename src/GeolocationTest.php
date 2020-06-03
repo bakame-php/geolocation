@@ -25,11 +25,11 @@ final class GeolocationTest extends TestCase
 {
     private Geolocation $location;
 
-    private float $antwerpLatitude = 51.260197;
+    private float $latitude = 51.260197;
 
-    private float $antwerpLongitude = 4.402771;
+    private float $longitude = 4.402771;
 
-    private string $antwerpGeoHash = 'u155s5wh2121';
+    private string $geoHash = 'u155s5wh2121';
 
     private const TIMEZONE = 'Europe/Brussels';
 
@@ -39,7 +39,7 @@ final class GeolocationTest extends TestCase
 
         date_default_timezone_set(self::TIMEZONE);
 
-        $this->location = Geolocation::fromCoordinates($this->antwerpLatitude, $this->antwerpLongitude);
+        $this->location = Geolocation::fromCoordinates($this->latitude, $this->longitude);
     }
 
     /**
@@ -120,10 +120,10 @@ final class GeolocationTest extends TestCase
     {
         $now = CarbonImmutable::now();
 
-        $localionCoord = Geolocation::fromCoordinates($this->antwerpLatitude, $this->antwerpLongitude);
+        $localionCoord = Geolocation::fromCoordinates($this->latitude, $this->longitude);
         $sunsetCoord = $localionCoord->sunset($now);
 
-        $locationHash = Geolocation::fromGeoHash($this->antwerpGeoHash);
+        $locationHash = Geolocation::fromGeoHash($this->geoHash);
         $sunsetHash = $locationHash->sunset($now);
 
         self::assertEquals($sunsetCoord, $sunsetHash);
@@ -134,9 +134,9 @@ final class GeolocationTest extends TestCase
      */
     public function it_exposes_location_properties(): void
     {
-        self::assertSame($this->antwerpLatitude, $this->location->latitude());
-        self::assertSame($this->antwerpLongitude, $this->location->longitude());
-        self::assertSame($this->antwerpGeoHash, $this->location->geoHash());
+        self::assertSame($this->latitude, $this->location->latitude());
+        self::assertSame($this->longitude, $this->location->longitude());
+        self::assertSame($this->geoHash, $this->location->geoHash());
     }
 
     /**
