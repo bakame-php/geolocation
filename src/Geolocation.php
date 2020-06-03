@@ -84,14 +84,9 @@ final class Geolocation
     {
         $date = $this->filterDate($date);
         $timezone = $date->getTimezone();
-        /** @var int|false $timestamp */
-        $timestamp = date_sunrise(
-            $date->getTimestamp(),
-            SUNFUNCS_RET_TIMESTAMP,
-            $this->latitude,
-            $this->longitude
-        );
 
+        /** @var int|false $timestamp */
+        $timestamp = date_sunrise($date->getTimestamp(), SUNFUNCS_RET_TIMESTAMP, $this->latitude, $this->longitude);
         if (false === $timestamp) {
             return null;
         }
@@ -116,12 +111,9 @@ final class Geolocation
     {
         $date = $this->filterDate($date);
         $timezone = $date->getTimezone();
+
         /** @var int $timestamp */
-        $timestamp = date_sun_info(
-            $date->getTimestamp(),
-            $this->latitude,
-            $this->longitude
-        )['transit'];
+        $timestamp = date_sun_info($date->getTimestamp(), $this->latitude, $this->longitude)['transit'];
 
         return $date->setTimestamp($timestamp)->setTimezone($timezone);
     }
@@ -130,14 +122,9 @@ final class Geolocation
     {
         $date = $this->filterDate($date);
         $timezone = $date->getTimezone();
-        /** @var int|false $timestamp */
-        $timestamp = date_sunset(
-            $date->getTimestamp(),
-            SUNFUNCS_RET_TIMESTAMP,
-            $this->latitude,
-            $this->longitude
-        );
 
+        /** @var int|false $timestamp */
+        $timestamp = date_sunset($date->getTimestamp(), SUNFUNCS_RET_TIMESTAMP, $this->latitude, $this->longitude);
         if (false === $timestamp) {
             return null;
         }
