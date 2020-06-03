@@ -84,6 +84,7 @@ final class Geolocation
     {
         $date = $this->filterDate($date);
         $timezone = $date->getTimezone();
+        /** @var int|false $timestamp */
         $timestamp = date_sunrise(
             $date->getTimestamp(),
             SUNFUNCS_RET_TIMESTAMP,
@@ -98,6 +99,9 @@ final class Geolocation
         return $date->setTimestamp($timestamp)->setTimezone($timezone);
     }
 
+    /**
+     * @psalm-suppress ArgumentTypeCoercion
+     */
     private function filterDate(\DateTimeInterface $date = null): \DateTimeImmutable
     {
         $date = $date ?? new \DateTimeImmutable();
@@ -112,6 +116,7 @@ final class Geolocation
     {
         $date = $this->filterDate($date);
         $timezone = $date->getTimezone();
+        /** @var int $timestamp */
         $timestamp = date_sun_info(
             $date->getTimestamp(),
             $this->latitude,
@@ -125,6 +130,7 @@ final class Geolocation
     {
         $date = $this->filterDate($date);
         $timezone = $date->getTimezone();
+        /** @var int|false $timestamp */
         $timestamp = date_sunset(
             $date->getTimestamp(),
             SUNFUNCS_RET_TIMESTAMP,

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm totallyTyped="false"
-       errorLevel="4"
+       errorLevel="1"
        resolveFromConfigFile="true"
        useDocblockPropertyTypes="true"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
